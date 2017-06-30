@@ -1,24 +1,52 @@
 package importer
 
 import (
+	"bytes"
 	"fmt"
+	"os"
+	"regexp"
 
-	"github.com/artonge/go-csv-tag"
+	"github.com/bernardolm/go-csv-tag"
 )
 
 func Do() {
-	tab := []test{}                   // Create the slice where to put the file content
-	err := csvtag.Load(csvtag.Config{ // Load your csv with the appropriate configuration
-		Path:      "file.csv", // Path of the csv file
-		Dest:      &tab,       // A pointer to the create slice
-		Separator: ';',        // Optional - if your csv use something else than ',' to separate values
-		// Header:    []string{"header1", "header2", "header3"}, // Optional - if your csv does not contains a header
+	period := []Workday{}
+
+	err := csvtag.Load(csvtag.Config{
+		Path:      "timesheet.csv",
+		Dest:      &period,
+		Separator: ';',
+		Modifier:  modifyMyFile,
 	})
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for i, v := range tab {
-		fmt.Printf("tab %d %#v\n", i, v)
+	for i, v := range period {
+		fmt.Printf("Workday %d %#v\n", i, v)
 	}
+}
+
+func modifyMyFile(file *os.File) *string {
+	if file == nil {
+		return nil
+	}
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(file)
+	contents := buf.String()
+
+	reg, err := regexp.Compile(";\n")
+	if err != nil {
+		return nil
+	}
+	contents = reg.ReplaceAllString(contents, "\n")
+
+	reg, err = regexp.Compile("Saldo.*")
+	if err != nil {
+		return nil
+	}
+	contents = reg.ReplaceAllString(contents, "")
+
+	return &contents
 }
