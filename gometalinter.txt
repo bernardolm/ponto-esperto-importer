@@ -1,0 +1,1 @@
+importer/main.go:36:14:warning: error return value not checked (buf.ReadFrom(file)) (errcheck)

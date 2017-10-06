@@ -27,3 +27,12 @@ dogo:
 
 vet: # reports suspicious constructs
 	godep go tool vet `pwd`
+
+linter:
+	go get github.com/alecthomas/gometalinter
+	gometalinter --install
+	gometalinter --config=gometalinter.json ./... | grep -v comment > gometalinter.txt
+
+lint:
+	go get github.com/golang/lint/golint
+	golint ./... | grep -v comment > golint.txt
