@@ -1,0 +1,11 @@
+{
+    "WorkingDir": "{GOPATH}/src/github.com/bernardolm/ponto-esperto-importer",
+    "SourceDir": [
+        "{GOPATH}/src/github.com/bernardolm/ponto-esperto-importer"
+    ],
+    "SourceExt": [".c", ".cpp", ".go", ".h", ".yml", ".json", ".xml"],
+    "BuildCmd": "gofmt -s -w .",
+    "RunCmd": "make dogo",
+    "Decreasing": 1
+}
+

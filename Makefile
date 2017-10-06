@@ -1,28 +1,29 @@
 
 setup:
 	go get github.com/tools/godep
-	go get github.com/liudng/dogo
 	godep restore -v ./...
 
 update-deps:
+	-rm -rf vendor
+	go get -v -t
+	go get -v -fix
 	godep save -v -t ./...
+	if [ -d Godeps ]; then godep update ./...; fi
 	rm -rf vendor
 
 test:
+	reset
 	godep go test ./...
 
 run:
 	godep go run main.go --verbose
 
-# install:
-# 	apt-get update
-# 	apt-get install -y pkg-config lxc libxml2 libxml2-dev
-
 bin: godep
 	GOOS=linux GOARCH=amd64 go build main.go
 
 dogo:
-	godep go test ./... # -run TestImporter
+	go get github.com/liudng/dogo
+	$(make) test
 
 vet: # reports suspicious constructs
 	godep go tool vet `pwd`
