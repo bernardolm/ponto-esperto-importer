@@ -1,11 +1,14 @@
 {
 	"ImportPath": "github.com/bernardolm/ponto-esperto-importer",
-	"GoVersion": "go1.7",
+	"GoVersion": "go1.9",
 	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
-			"ImportPath": "github.com/artonge/go-csv-tag",
-			"Rev": "1d36025be7e2f72244684e200ebc41764d5aa7fc"
+			"ImportPath": "github.com/bernardolm/go-csv-tag",
+			"Rev": "987a2fa6e1700769dc825a8d6d4b4505a2abecea"
 		}
 	]
 }
