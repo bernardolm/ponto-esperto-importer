@@ -23,7 +23,7 @@ bin: godep
 
 dogo:
 	go get github.com/liudng/dogo
-	$(make) test
+	$(MAKE) test
 
 vet: # reports suspicious constructs
 	godep go tool vet `pwd`
