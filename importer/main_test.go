@@ -13,4 +13,5 @@ func TestDo(t *testing.T) {
 	assert.Len(t, actual, 116)
 
 	assert.Equal(t, "03/08/15", actual[0].Date)
+	assert.Equal(t, "-00:25", actual[23].Balance)
 }
