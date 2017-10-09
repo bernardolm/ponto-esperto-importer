@@ -7,7 +7,7 @@ import (
 )
 
 func TestDo(t *testing.T) {
-	actual := Do("../timesheet.csv")
+	actual := Do("../timesheet.csv", false)
 
 	assert.NotNil(t, actual)
 	assert.Len(t, actual, 116)

@@ -9,7 +9,7 @@ import (
 	"github.com/bernardolm/go-csv-tag"
 )
 
-func Do(filePath string) []Workday {
+func Do(filePath string, build bool) []Workday {
 	workdays := []Workday{}
 
 	err := csvtag.Load(csvtag.Config{
@@ -22,8 +22,10 @@ func Do(filePath string) []Workday {
 		fmt.Println(err)
 	}
 
-	for i, v := range workdays {
-		fmt.Printf("Workday %d %#v\n", i, v)
+	if build {
+		for i, v := range workdays {
+			fmt.Printf("Workday %d %#v\n", i, v)
+		}
 	}
 
 	return workdays

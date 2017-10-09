@@ -13,7 +13,10 @@ func main() {
 	var file string
 	flag.StringVar(&file, "file", "timesheet.csv", "file path with timesheet entries exported by Ponto Esperto app")
 
+	var debug bool
+	flag.BoolVar(&debug, "debug", false, "flag to print debug infos")
+
 	flag.Parse()
 
-	importer.Do(file)
+	importer.Do(file, debug)
 }
