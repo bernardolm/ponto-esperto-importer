@@ -46,7 +46,7 @@ func modifyMyFile(file *os.File) *string {
 	}
 	contents = reg.ReplaceAllString(contents, "\n")
 
-	reg, err = regexp.Compile("Saldo.*")
+	reg, err = regexp.Compile(`Saldo\stotal.*`)
 	if err != nil {
 		return nil
 	}
