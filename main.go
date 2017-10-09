@@ -26,12 +26,16 @@ func main() {
 	workdays := importer.Do(file, debug)
 
 	switch driver {
-	default:
+	case "":
+		panic("unknown driver")
+	case "meuponto":
 		filePathParts := strings.Split(file, ".")
 		if len(filePathParts) == 0 {
 			panic("unknown output file")
 		}
 		filePath := fmt.Sprintf("%s_result.json", filePathParts[0])
 		meuponto.Do(workdays, filePath, debug)
+	default:
+		panic("unknown driver")
 	}
 }
