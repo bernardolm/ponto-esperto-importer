@@ -9,12 +9,12 @@ import (
 	"github.com/bernardolm/go-csv-tag"
 )
 
-func Do(filePath string) {
-	period := []Workday{}
+func Do(filePath string) []Workday {
+	workdays := []Workday{}
 
 	err := csvtag.Load(csvtag.Config{
 		Path:      filePath,
-		Dest:      &period,
+		Dest:      &workdays,
 		Separator: ';',
 		Modifier:  modifyMyFile,
 	})
@@ -22,9 +22,11 @@ func Do(filePath string) {
 		fmt.Println(err)
 	}
 
-	for i, v := range period {
+	for i, v := range workdays {
 		fmt.Printf("Workday %d %#v\n", i, v)
 	}
+
+	return workdays
 }
 
 func modifyMyFile(file *os.File) *string {
