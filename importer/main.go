@@ -50,5 +50,11 @@ func modifyMyFile(file *os.File) *string {
 	}
 	contents = reg.ReplaceAllString(contents, "")
 
+	reg, err = regexp.Compile("\t")
+	if err != nil {
+		return nil
+	}
+	contents = reg.ReplaceAllString(contents, "")
+
 	return &contents
 }
