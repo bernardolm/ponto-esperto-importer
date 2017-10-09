@@ -18,8 +18,8 @@ test:
 run:
 	godep go run main.go --verbose
 
-bin: godep
-	GOOS=linux GOARCH=amd64 go build main.go
+bin: setup
+	GOOS=linux GOARCH=amd64 go build -o ponto-esperto-importer
 
 dogo:
 	go get github.com/liudng/dogo
