@@ -9,11 +9,11 @@ import (
 	"github.com/bernardolm/go-csv-tag"
 )
 
-func Do() {
+func Do(filePath string) {
 	period := []Workday{}
 
 	err := csvtag.Load(csvtag.Config{
-		Path:      "timesheet.csv",
+		Path:      filePath,
 		Dest:      &period,
 		Separator: ';',
 		Modifier:  modifyMyFile,
