@@ -3,6 +3,6 @@ package meuponto
 import "time"
 
 type Entry struct {
-	Comment string
-	Time    time.Time
+	Comment string    `json:"comment"`
+	Time    time.Time `json:"time"`
 }

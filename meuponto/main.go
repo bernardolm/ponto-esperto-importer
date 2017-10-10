@@ -1,28 +1,34 @@
 package meuponto
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"time"
 
 	"github.com/bernardolm/ponto-esperto-importer/importer"
 )
 
 func Do(workdays []importer.Workday, filePath string, debug bool) {
-	result := []Entry{}
+	entries := []Entry{}
 
 	for _, v := range workdays {
 		if dateTime1 := mergeDateTime(v.Date, v.In); dateTime1 != nil {
-			result = append(result, Entry{
+			entries = append(entries, Entry{
 				Time:    *dateTime1,
-				Comment: fmt.Sprintf("'In' at %s %s", v.Date, v.In),
+				Comment: fmt.Sprintf("In at %s %s", v.Date, v.In),
 			})
 		}
 	}
 
 	if debug {
-		for i, v := range result {
+		for i, v := range entries {
 			fmt.Printf("Entry %d %+v\n", i, v)
 		}
+	}
+
+	if len(filePath) > 0 {
+		generateFile(filePath, entries)
 	}
 }
 
@@ -67,4 +73,16 @@ func mergeDateTime(dateString string, timeString string) *time.Time {
 	result := time.Date(y, m, d, hourMinute.Hour(), hourMinute.Minute(), 0, 0, time.UTC)
 
 	return &result
+}
+
+func generateFile(filePath string, entries []Entry) {
+	entriesJSON, err := json.Marshal(entries)
+	if err != nil {
+		panic("can't parse entries to json")
+	}
+
+	err = ioutil.WriteFile(filePath, entriesJSON, 0644)
+	if err != nil {
+		panic("can't create file")
+	}
 }
