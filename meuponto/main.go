@@ -13,47 +13,12 @@ func Do(workdays []importer.Workday, filePath string, debug bool) []Entry {
 	entries := []Entry{}
 
 	for _, v := range workdays {
-		if dateTime := mergeDateTime(v.Date, v.In); dateTime != nil {
-			entries = append(entries, Entry{
-				Time:    *dateTime,
-				Comment: fmt.Sprintf("Using %+v", v),
-			})
-		}
-
-		if dateTime := mergeDateTime(v.Date, v.BreakOut); dateTime != nil {
-			entries = append(entries, Entry{
-				Time:    *dateTime,
-				Comment: fmt.Sprintf("Using %+v", v),
-			})
-		}
-
-		if dateTime := mergeDateTime(v.Date, v.BreakIn); dateTime != nil {
-			entries = append(entries, Entry{
-				Time:    *dateTime,
-				Comment: fmt.Sprintf("Using %+v", v),
-			})
-		}
-
-		if dateTime := mergeDateTime(v.Date, v.Out); dateTime != nil {
-			entries = append(entries, Entry{
-				Time:    *dateTime,
-				Comment: fmt.Sprintf("Using %+v", v),
-			})
-		}
-
-		if dateTime := mergeDateTime(v.Date, v.ExtraIn); dateTime != nil {
-			entries = append(entries, Entry{
-				Time:    *dateTime,
-				Comment: fmt.Sprintf("Using %+v", v),
-			})
-		}
-
-		if dateTime := mergeDateTime(v.Date, v.ExtraOut); dateTime != nil {
-			entries = append(entries, Entry{
-				Time:    *dateTime,
-				Comment: fmt.Sprintf("Using %+v", v),
-			})
-		}
+		entries = addEntry(v.In, v, entries)
+		entries = addEntry(v.BreakOut, v, entries)
+		entries = addEntry(v.BreakIn, v, entries)
+		entries = addEntry(v.Out, v, entries)
+		entries = addEntry(v.ExtraIn, v, entries)
+		entries = addEntry(v.ExtraOut, v, entries)
 	}
 
 	if debug {
@@ -124,12 +89,12 @@ func generateFile(filePath string, entries []Entry) {
 	}
 }
 
-func addEntry(date string, hourMinute string, workday importer.Workday, entries []Entry) []Entry {
-	if dateTime := mergeDateTime(date, hourMinute); dateTime != nil {
-		return append(entries, Entry{
+func addEntry(hourMinute string, workday importer.Workday, entries []Entry) []Entry {
+	if dateTime := mergeDateTime(workday.Date, hourMinute); dateTime != nil {
+		entries = append(entries, Entry{
 			Time:    *dateTime,
 			Comment: fmt.Sprintf("Using %+v", workday),
 		})
 	}
-	return nil
+	return entries
 }

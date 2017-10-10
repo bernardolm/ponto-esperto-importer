@@ -1,1 +1,0 @@
-meuponto/main.go:12::warning: cyclomatic complexity 11 of function Do() is high (> 10) (gocyclo)
