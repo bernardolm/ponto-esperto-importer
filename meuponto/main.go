@@ -9,7 +9,7 @@ import (
 	"github.com/bernardolm/ponto-esperto-importer/importer"
 )
 
-func Do(workdays []importer.Workday, filePath string, debug bool) {
+func Do(workdays []importer.Workday, filePath string, debug bool) []Entry {
 	entries := []Entry{}
 
 	for _, v := range workdays {
@@ -65,6 +65,8 @@ func Do(workdays []importer.Workday, filePath string, debug bool) {
 	if len(filePath) > 0 {
 		generateFile(filePath, entries)
 	}
+
+	return entries
 }
 
 func parseDate(date string) *time.Time {
@@ -120,4 +122,14 @@ func generateFile(filePath string, entries []Entry) {
 	if err != nil {
 		panic("can't create file")
 	}
+}
+
+func addEntry(date string, hourMinute string, workday importer.Workday, entries []Entry) []Entry {
+	if dateTime := mergeDateTime(date, hourMinute); dateTime != nil {
+		return append(entries, Entry{
+			Time:    *dateTime,
+			Comment: fmt.Sprintf("Using %+v", workday),
+		})
+	}
+	return nil
 }
