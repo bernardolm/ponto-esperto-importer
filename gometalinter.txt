@@ -1,1 +1,1 @@
-importer/main.go:36:14:warning: error return value not checked (buf.ReadFrom(file)) (errcheck)
+meuponto/main.go:12::warning: cyclomatic complexity 11 of function Do() is high (> 10) (gocyclo)

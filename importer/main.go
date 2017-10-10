@@ -37,7 +37,10 @@ func modifyMyFile(file *os.File) *string {
 	}
 
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(file)
+	_, err := buf.ReadFrom(file)
+	if err != nil {
+		return nil
+	}
 	contents := buf.String()
 
 	reg, err := regexp.Compile(";\n")
