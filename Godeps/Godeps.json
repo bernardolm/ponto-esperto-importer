@@ -8,7 +8,7 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/bernardolm/go-csv-tag",
-			"Rev": "987a2fa6e1700769dc825a8d6d4b4505a2abecea"
+			"Rev": "557076d7aee53fd7c7007d317eaa3c387156fad9"
 		},
 		{
 			"ImportPath": "github.com/davecgh/go-spew/spew",
