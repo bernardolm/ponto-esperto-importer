@@ -7,7 +7,24 @@ import (
 	"github.com/bernardolm/ponto-esperto-importer/importer"
 )
 
-func Do(workdays []importer.Workday, filePath string, debug bool) {}
+func Do(workdays []importer.Workday, filePath string, debug bool) {
+	result := []Entry{}
+
+	for _, v := range workdays {
+		if dateTime1 := mergeDateTime(v.Date, v.In); dateTime1 != nil {
+			result = append(result, Entry{
+				Time:    *dateTime1,
+				Comment: fmt.Sprintf("'In' at %s %s", v.Date, v.In),
+			})
+		}
+	}
+
+	if debug {
+		for i, v := range result {
+			fmt.Printf("Entry %d %+v\n", i, v)
+		}
+	}
+}
 
 func parseDate(date string) *time.Time {
 	d, err := time.Parse("02/01/06", date)

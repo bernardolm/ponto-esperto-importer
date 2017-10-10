@@ -24,7 +24,7 @@ func Do(filePath string, debug bool) []Workday {
 
 	if debug {
 		for i, v := range workdays {
-			fmt.Printf("Workday %d %#v\n", i, v)
+			fmt.Printf("Workday %d %+v\n", i, v)
 		}
 	}
 
