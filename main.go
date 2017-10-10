@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strings"
 
 	"github.com/bernardolm/ponto-esperto-importer/importer"
+	"github.com/bernardolm/ponto-esperto-importer/lib"
 	"github.com/bernardolm/ponto-esperto-importer/meuponto"
 )
 
@@ -23,25 +23,23 @@ func main() {
 
 	flag.Parse()
 
-	debugMessage := ""
-	if debug {
-		debugMessage = "in debug mode"
+	lib.Config = lib.Configuration{
+		Debug:    debug,
+		Driver:   driver,
+		FilePath: file,
 	}
 
-	fmt.Printf("Trying import %s with driver %s %s\n", file, driver, debugMessage)
+	fmt.Printf("Trying import %s with driver %s %s\n", file, driver, lib.Config.DebugMessage())
 
-	workdays := importer.Do(file, debug)
+	lib.Config.CheckFile()
+
+	workdays := importer.Do()
 
 	switch driver {
 	case "":
 		panic("unknown driver")
 	case "meuponto":
-		filePathParts := strings.Split(file, ".")
-		if len(filePathParts) == 0 {
-			panic("unknown output file")
-		}
-		filePath := fmt.Sprintf("%s_result.json", filePathParts[0])
-		meuponto.Do(workdays, filePath, debug)
+		meuponto.Do(workdays)
 	default:
 		panic("unknown driver")
 	}

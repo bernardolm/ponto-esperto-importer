@@ -7,9 +7,10 @@ import (
 	"time"
 
 	"github.com/bernardolm/ponto-esperto-importer/importer"
+	"github.com/bernardolm/ponto-esperto-importer/lib"
 )
 
-func Do(workdays []importer.Workday, filePath string, debug bool) []Entry {
+func Do(workdays []importer.Workday) []Entry {
 	entries := []Entry{}
 
 	for _, v := range workdays {
@@ -21,14 +22,14 @@ func Do(workdays []importer.Workday, filePath string, debug bool) []Entry {
 		entries = addEntry(v.ExtraOut, v, entries)
 	}
 
-	if debug {
+	if lib.Config.Debug {
 		for i, v := range entries {
 			fmt.Printf("Entry %d %+v\n", i, v)
 		}
 	}
 
-	if len(filePath) > 0 {
-		generateFile(filePath, entries)
+	if lib.Config.HasFilePathResult() {
+		generateFile(entries)
 	}
 
 	return entries
@@ -77,13 +78,13 @@ func mergeDateTime(dateString string, timeString string) *time.Time {
 	return &result
 }
 
-func generateFile(filePath string, entries []Entry) {
+func generateFile(entries []Entry) {
 	entriesJSON, err := json.Marshal(entries)
 	if err != nil {
 		panic("can't parse entries to json")
 	}
 
-	err = ioutil.WriteFile(filePath, entriesJSON, 0644)
+	err = ioutil.WriteFile(lib.Config.FilePathResult(), entriesJSON, 0644)
 	if err != nil {
 		panic("can't create file")
 	}

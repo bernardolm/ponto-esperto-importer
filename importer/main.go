@@ -7,13 +7,15 @@ import (
 	"regexp"
 
 	"github.com/bernardolm/go-csv-tag"
+
+	"github.com/bernardolm/ponto-esperto-importer/lib"
 )
 
-func Do(filePath string, debug bool) []Workday {
+func Do() []Workday {
 	workdays := []Workday{}
 
 	err := csvtag.Load(csvtag.Config{
-		Path:      filePath,
+		Path:      lib.Config.FilePath,
 		Dest:      &workdays,
 		Separator: ';',
 		Modifier:  modifyMyFile,
@@ -22,7 +24,7 @@ func Do(filePath string, debug bool) []Workday {
 		fmt.Println(err)
 	}
 
-	if debug {
+	if lib.Config.Debug {
 		for i, v := range workdays {
 			fmt.Printf("Workday %d %+v\n", i, v)
 		}

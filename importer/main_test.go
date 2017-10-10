@@ -4,10 +4,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bernardolm/ponto-esperto-importer/lib"
 )
 
 func TestDo(t *testing.T) {
-	actual := Do("../timesheet.csv", false)
+	lib.Config.FilePath = "../timesheet.csv"
+
+	actual := Do()
 
 	assert.NotNil(t, actual)
 	assert.Len(t, actual, 116)
