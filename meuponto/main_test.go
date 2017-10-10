@@ -4,6 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bernardolm/ponto-esperto-importer/importer"
 )
 
 func TestParseDate(t *testing.T) {
@@ -77,4 +79,12 @@ func TestMergeDateTime(t *testing.T) {
 	assert.Equal(t, 1, actual.Day())
 	assert.Equal(t, 0, actual.Hour())
 	assert.Equal(t, 0, actual.Minute())
+}
+
+func TestDo(t *testing.T) {
+	workdays := importer.Do("../timesheet.csv", false)
+	assert.Len(t, workdays, 116)
+
+	actual := Do(workdays, "", false)
+	assert.Len(t, actual, 502)
 }
