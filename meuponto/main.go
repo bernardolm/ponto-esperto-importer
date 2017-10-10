@@ -94,7 +94,7 @@ func addEntry(hourMinute string, workday importer.Workday, entries []Entry) []En
 	if dateTime := mergeDateTime(workday.Date, hourMinute); dateTime != nil {
 		entries = append(entries, Entry{
 			Time:    *dateTime,
-			Comment: fmt.Sprintf("Using %+v", workday),
+			Comment: fmt.Sprintf("Using %+v from file %s", workday, lib.Config.FilePath),
 		})
 	}
 	return entries

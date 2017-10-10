@@ -25,10 +25,11 @@ func (c Configuration) FilePathResult() string {
 	if j <= 0 {
 		return ""
 	}
-
-	fileName := c.FilePath[i:j]
-
-	return fmt.Sprintf("%s_result.json", fileName)
+	if i < 0 {
+		return fmt.Sprintf("%s_result.json", c.FilePath[0:j])
+	} else {
+		return fmt.Sprintf("%s_result.json", c.FilePath[i:j])
+	}
 }
 
 func (c Configuration) HasFilePathResult() bool {
