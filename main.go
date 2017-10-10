@@ -23,6 +23,13 @@ func main() {
 
 	flag.Parse()
 
+	debugMessage := ""
+	if debug {
+		debugMessage = "in debug mode"
+	}
+
+	fmt.Printf("Trying import %s with driver %s %s\n", file, driver, debugMessage)
+
 	workdays := importer.Do(file, debug)
 
 	switch driver {
