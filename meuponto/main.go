@@ -13,10 +13,45 @@ func Do(workdays []importer.Workday, filePath string, debug bool) {
 	entries := []Entry{}
 
 	for _, v := range workdays {
-		if dateTime1 := mergeDateTime(v.Date, v.In); dateTime1 != nil {
+		if dateTime := mergeDateTime(v.Date, v.In); dateTime != nil {
 			entries = append(entries, Entry{
-				Time:    *dateTime1,
-				Comment: fmt.Sprintf("In at %s %s", v.Date, v.In),
+				Time:    *dateTime,
+				Comment: fmt.Sprintf("Using %+v", v),
+			})
+		}
+
+		if dateTime := mergeDateTime(v.Date, v.BreakOut); dateTime != nil {
+			entries = append(entries, Entry{
+				Time:    *dateTime,
+				Comment: fmt.Sprintf("Using %+v", v),
+			})
+		}
+
+		if dateTime := mergeDateTime(v.Date, v.BreakIn); dateTime != nil {
+			entries = append(entries, Entry{
+				Time:    *dateTime,
+				Comment: fmt.Sprintf("Using %+v", v),
+			})
+		}
+
+		if dateTime := mergeDateTime(v.Date, v.Out); dateTime != nil {
+			entries = append(entries, Entry{
+				Time:    *dateTime,
+				Comment: fmt.Sprintf("Using %+v", v),
+			})
+		}
+
+		if dateTime := mergeDateTime(v.Date, v.ExtraIn); dateTime != nil {
+			entries = append(entries, Entry{
+				Time:    *dateTime,
+				Comment: fmt.Sprintf("Using %+v", v),
+			})
+		}
+
+		if dateTime := mergeDateTime(v.Date, v.ExtraOut); dateTime != nil {
+			entries = append(entries, Entry{
+				Time:    *dateTime,
+				Comment: fmt.Sprintf("Using %+v", v),
 			})
 		}
 	}
