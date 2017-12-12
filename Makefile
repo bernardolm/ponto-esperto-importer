@@ -5,10 +5,9 @@ setup:
 
 update-deps:
 	-rm -rf vendor
-	go get -v -t
-	go get -v -fix
+	go get -v -t -fix
 	godep save -v -t ./...
-	if [ -d Godeps ]; then godep update ./...; fi
+	if [ -d Godeps ]; then godep update; fi
 	rm -rf vendor
 
 test:
@@ -19,7 +18,7 @@ run:
 	godep go run main.go --verbose
 
 bin: setup
-	GOOS=linux GOARCH=amd64 go build -o ponto-esperto-importer
+	GOOS=linux GOARCH=amd64 go build
 
 dogo:
 	go get github.com/liudng/dogo

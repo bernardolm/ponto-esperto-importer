@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"time"
+
+	"github.com/hako/durafmt"
 
 	"github.com/bernardolm/ponto-esperto-importer/importer"
 	"github.com/bernardolm/ponto-esperto-importer/lib"
@@ -10,6 +13,8 @@ import (
 )
 
 func main() {
+	start := time.Now()
+
 	fmt.Println("Ponto Esperto importer")
 
 	var file string
@@ -43,4 +48,6 @@ func main() {
 	default:
 		panic("unknown driver")
 	}
+
+	fmt.Printf("Finish import after %+v\n", durafmt.Parse(time.Since(start)))
 }
